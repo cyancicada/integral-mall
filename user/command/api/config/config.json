@@ -1,0 +1,15 @@
+{
+  "Mode": "release",
+  "Port": ":9000",
+  "Mysql": {
+    "DataSource": "root:Vector.123@tcp(192.168.5.100:3306)/user?charset=utf8",
+    "Table": {
+      "User": "user"
+    }
+  },
+  "Redis": {
+    "DataSource": "192.168.5.100:6379",
+    "Auth": ""
+  },
+  "RabbitMq": "amqp://root:123456@192.168.5.100:5672/"
+}
