@@ -6,15 +6,18 @@ import (
 	"strconv"
 
 	"github.com/go-redis/redis"
+	"github.com/yakaa/log4g"
 
 	"integral-mall/common/baseerror"
+	"integral-mall/common/rpcxclient/integralrpcmodel"
 	"integral-mall/user/model"
 )
 
 type (
 	UserLogic struct {
-		userModel  *model.UserModel
-		redisCache *redis.Client
+		userModel        *model.UserModel
+		redisCache       *redis.Client
+		integralRpcModel *integralrpcmodel.IntegralRpcModel
 	}
 	RegisterRequest struct {
 		Mobile   string `json:"mobile" binding:"required"`
@@ -34,9 +37,12 @@ type (
 
 var ErrRecordExist = baseerror.NewBaseError("此手机号已经存在")
 
-func NewUserLogic(userModel *model.UserModel, redisCache *redis.Client) *UserLogic {
+func NewUserLogic(userModel *model.UserModel,
+	redisCache *redis.Client,
+	integralRpcModel *integralrpcmodel.IntegralRpcModel,
+) *UserLogic {
 
-	return &UserLogic{userModel: userModel, redisCache: redisCache}
+	return &UserLogic{userModel: userModel, redisCache: redisCache, integralRpcModel: integralRpcModel}
 }
 
 func (l *UserLogic) Register(r *RegisterRequest) (*RegisterResponse, error) {
@@ -48,11 +54,15 @@ func (l *UserLogic) Register(r *RegisterRequest) (*RegisterResponse, error) {
 	if b {
 		return nil, ErrRecordExist
 	}
-	if _, err := l.userModel.Insert(&model.User{
+	userId, err := l.userModel.Insert(&model.User{
 		Mobile:   r.Mobile,
 		Password: fmt.Sprintf("%x", md5.Sum([]byte(r.Password))),
-	}); err != nil {
+	})
+	if err != nil {
 		return nil, err
+	}
+	if err := l.integralRpcModel.AddIntegral(int(userId), 1000); err != nil {
+		log4g.ErrorFormat("AddIntegral err %+v", err)
 	}
 	return response, nil
 }

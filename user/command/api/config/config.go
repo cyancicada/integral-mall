@@ -1,5 +1,9 @@
 package config
 
+import (
+	rpc_config "github.com/yakaa/grpcx/config"
+)
+
 type Config struct {
 	Mode  string `json:"mode"`
 	Port  string `json:"port"`
@@ -18,4 +22,5 @@ type Config struct {
 		DataSource  string
 		VirtualHost string
 	}
+	IntegralRpc *rpc_config.ClientConf
 }

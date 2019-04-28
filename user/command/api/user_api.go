@@ -9,10 +9,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
 	"github.com/go-xorm/xorm"
+	"github.com/yakaa/grpcx"
 	"github.com/yakaa/log4g"
 
 	_ "github.com/go-sql-driver/mysql"
 
+	"integral-mall/common/rpcxclient/integralrpcmodel"
 	"integral-mall/user/command/api/config"
 	"integral-mall/user/controller"
 	"integral-mall/user/logic"
@@ -40,10 +42,18 @@ func main() {
 		log.Fatal(err)
 	}
 	client := redis.NewClient(&redis.Options{Addr: conf.Redis.DataSource, Password: conf.Redis.Auth})
+	rpcxClient, err := grpcx.MustNewGrpcxClient(conf.IntegralRpc)
+	if err != nil {
+		log.Fatal(err)
+	}
+	integralRpcModel := integralrpcmodel.NewIntegralRpcModel(
+		rpcxClient,
+	)
 
 	userModel := model.NewUserModel(engine, client, conf.Mysql.Table.User)
-	userLogic := logic.NewUserLogic(userModel, client)
+	userLogic := logic.NewUserLogic(userModel, client, integralRpcModel)
 	userController := controller.NewUserController(userLogic)
+
 	r := gin.Default()
 
 	userRouteGroup := r.Group("/user")

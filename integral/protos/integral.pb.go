@@ -213,7 +213,7 @@ func init() {
 func init() { proto.RegisterFile("integral.proto", fileDescriptor_d3d836c8d70e1b53) }
 
 var fileDescriptor_d3d836c8d70e1b53 = []byte{
-	// 216 bytes of a gzipped FileDescriptorProto
+	// 215 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xcb, 0xcc, 0x2b, 0x49,
 	0x4d, 0x2f, 0x4a, 0xcc, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x03, 0x53, 0xc5, 0x4a,
 	0x86, 0x5c, 0xe2, 0x6e, 0x99, 0x79, 0x29, 0xa1, 0xc5, 0xa9, 0x45, 0x4e, 0x95, 0xbe, 0xf9, 0x49,
@@ -223,11 +223,11 @@ var fileDescriptor_d3d836c8d70e1b53 = []byte{
 	0x0a, 0x58, 0x2d, 0x73, 0x10, 0x94, 0x27, 0x24, 0xc5, 0xc5, 0x01, 0xb3, 0x58, 0x82, 0x09, 0x2c,
 	0x03, 0xe7, 0x2b, 0x79, 0x70, 0x09, 0x39, 0xa6, 0xa4, 0x20, 0x8c, 0x82, 0xdb, 0x4a, 0xb2, 0x49,
 	0xb1, 0x5c, 0xe2, 0xce, 0xf9, 0x79, 0xc5, 0xa5, 0xb9, 0xa9, 0x45, 0xc4, 0x1a, 0xa7, 0xc5, 0x25,
-	0x90, 0x8c, 0xa6, 0x05, 0x6a, 0x2c, 0x86, 0xb8, 0xd1, 0x5c, 0x46, 0x2e, 0x76, 0x50, 0x00, 0x05,
-	0x15, 0x24, 0x0b, 0x39, 0x73, 0x71, 0x23, 0x39, 0x5a, 0x48, 0x0a, 0x12, 0x9c, 0xc5, 0x7a, 0x98,
-	0x3e, 0x91, 0x92, 0x80, 0xc9, 0x61, 0x84, 0x96, 0x2f, 0x97, 0x00, 0xba, 0x7b, 0x85, 0xe4, 0x61,
-	0xaa, 0x71, 0xf8, 0x04, 0xb7, 0x71, 0x49, 0x90, 0xb8, 0x34, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff,
-	0x11, 0x3b, 0x5e, 0x6b, 0xe4, 0x01, 0x00, 0x00,
+	0x90, 0x8c, 0xa6, 0x05, 0x6a, 0x2c, 0x86, 0xb8, 0xd1, 0x42, 0x46, 0x2e, 0x6e, 0xb8, 0xb9, 0x05,
+	0xc9, 0x42, 0xce, 0x5c, 0xdc, 0x48, 0x0e, 0x17, 0x92, 0x82, 0x04, 0x69, 0xb1, 0x1e, 0xa6, 0x6f,
+	0xa4, 0x24, 0x60, 0x72, 0x18, 0x21, 0xe6, 0xcb, 0x25, 0x80, 0xee, 0x66, 0x21, 0x79, 0x98, 0x6a,
+	0x1c, 0xbe, 0xc1, 0x6d, 0x5c, 0x12, 0x24, 0x3e, 0x8d, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x73,
+	0x8c, 0x50, 0xe7, 0xe8, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -238,97 +238,97 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// UserRpcClient is the client API for UserRpc service.
+// IntegralRpcClient is the client API for IntegralRpc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type UserRpcClient interface {
+type IntegralRpcClient interface {
 	AddIntegral(ctx context.Context, in *AddIntegralRequest, opts ...grpc.CallOption) (*IntegralResponse, error)
 	ConsumerIntegral(ctx context.Context, in *ConsumerIntegralRequest, opts ...grpc.CallOption) (*IntegralResponse, error)
 }
 
-type userRpcClient struct {
+type integralRpcClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewUserRpcClient(cc *grpc.ClientConn) UserRpcClient {
-	return &userRpcClient{cc}
+func NewIntegralRpcClient(cc *grpc.ClientConn) IntegralRpcClient {
+	return &integralRpcClient{cc}
 }
 
-func (c *userRpcClient) AddIntegral(ctx context.Context, in *AddIntegralRequest, opts ...grpc.CallOption) (*IntegralResponse, error) {
+func (c *integralRpcClient) AddIntegral(ctx context.Context, in *AddIntegralRequest, opts ...grpc.CallOption) (*IntegralResponse, error) {
 	out := new(IntegralResponse)
-	err := c.cc.Invoke(ctx, "/protos.UserRpc/AddIntegral", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/protos.IntegralRpc/AddIntegral", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userRpcClient) ConsumerIntegral(ctx context.Context, in *ConsumerIntegralRequest, opts ...grpc.CallOption) (*IntegralResponse, error) {
+func (c *integralRpcClient) ConsumerIntegral(ctx context.Context, in *ConsumerIntegralRequest, opts ...grpc.CallOption) (*IntegralResponse, error) {
 	out := new(IntegralResponse)
-	err := c.cc.Invoke(ctx, "/protos.UserRpc/ConsumerIntegral", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/protos.IntegralRpc/ConsumerIntegral", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserRpcServer is the server API for UserRpc service.
-type UserRpcServer interface {
+// IntegralRpcServer is the server API for IntegralRpc service.
+type IntegralRpcServer interface {
 	AddIntegral(context.Context, *AddIntegralRequest) (*IntegralResponse, error)
 	ConsumerIntegral(context.Context, *ConsumerIntegralRequest) (*IntegralResponse, error)
 }
 
-func RegisterUserRpcServer(s *grpc.Server, srv UserRpcServer) {
-	s.RegisterService(&_UserRpc_serviceDesc, srv)
+func RegisterIntegralRpcServer(s *grpc.Server, srv IntegralRpcServer) {
+	s.RegisterService(&_IntegralRpc_serviceDesc, srv)
 }
 
-func _UserRpc_AddIntegral_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _IntegralRpc_AddIntegral_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddIntegralRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserRpcServer).AddIntegral(ctx, in)
+		return srv.(IntegralRpcServer).AddIntegral(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/protos.UserRpc/AddIntegral",
+		FullMethod: "/protos.IntegralRpc/AddIntegral",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserRpcServer).AddIntegral(ctx, req.(*AddIntegralRequest))
+		return srv.(IntegralRpcServer).AddIntegral(ctx, req.(*AddIntegralRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserRpc_ConsumerIntegral_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _IntegralRpc_ConsumerIntegral_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ConsumerIntegralRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserRpcServer).ConsumerIntegral(ctx, in)
+		return srv.(IntegralRpcServer).ConsumerIntegral(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/protos.UserRpc/ConsumerIntegral",
+		FullMethod: "/protos.IntegralRpc/ConsumerIntegral",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserRpcServer).ConsumerIntegral(ctx, req.(*ConsumerIntegralRequest))
+		return srv.(IntegralRpcServer).ConsumerIntegral(ctx, req.(*ConsumerIntegralRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _UserRpc_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "protos.UserRpc",
-	HandlerType: (*UserRpcServer)(nil),
+var _IntegralRpc_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "protos.IntegralRpc",
+	HandlerType: (*IntegralRpcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "AddIntegral",
-			Handler:    _UserRpc_AddIntegral_Handler,
+			Handler:    _IntegralRpc_AddIntegral_Handler,
 		},
 		{
 			MethodName: "ConsumerIntegral",
-			Handler:    _UserRpc_ConsumerIntegral_Handler,
+			Handler:    _IntegralRpc_ConsumerIntegral_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
