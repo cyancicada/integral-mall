@@ -31,7 +31,7 @@ func (m *IntegralRpcModel) AddIntegral(userId, integral int) error {
 	}
 	clientIntegral := protos.NewIntegralRpcClient(conn)
 	if _, err := clientIntegral.AddIntegral(
-		context.Background(),
+		context.TODO(),
 		&protos.AddIntegralRequest{UserId: int64(userId),
 			Integral: int64(integral)}); err != nil {
 		return err
