@@ -46,7 +46,7 @@ func main() {
 		log.Fatal(err)
 	}
 	rpcServer, err := grpcx.MustNewGrpcxServer(conf.RpcServerConfig, func(server *grpc.Server) {
-		protos.RegisterUserRpcServer(server, userServerLogic)
+		protos.RegisterIntegralRpcServer(server, userServerLogic)
 	})
 	if err != nil {
 		log.Fatal(err)
