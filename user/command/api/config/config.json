@@ -11,5 +11,8 @@
     "DataSource": "192.168.5.100:6379",
     "Auth": ""
   },
-  "RabbitMq": "amqp://root:123456@192.168.5.100:5672/"
+  "RabbitMq": {
+    "DataSource": "amqp://root:123456@192.168.5.100:5672/",
+    "VirtualHost": ""
+  }
 }

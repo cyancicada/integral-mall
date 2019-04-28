@@ -1,41 +1,16 @@
-[GIN] 2019/04/25 - 20:48:24 | 200 |       495.9µs |       127.0.0.1 | GET      /ping
-[GIN] 2019/04/26 - 19:58:51 | 404 |            0s |       127.0.0.1 | POST     /user/registr
-[GIN] 2019/04/26 - 19:59:33 | 404 |            0s |       127.0.0.1 | POST     /user/registr
-[GIN] 2019/04/26 - 19:59:42 | 400 |            0s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:00:48 | 400 |     48.77963s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:01:00 | 200 |    6.8972422s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:12:34 | 400 |    4.1262678s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:12:54 | 400 |    4.8555592s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:14:28 | 400 |    2.3436313s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:17:31 | 400 |     9.088917s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:20:05 | 200 |    2.4313141s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:21:45 | 400 |       496.1µs |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:23:12 | 400 |       443.6µs |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:31:04 | 400 |       496.8µs |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:33:55 | 400 |       496.7µs |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:34:25 | 400 |       988.6µs |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:34:56 | 400 |       495.3µs |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:35:22 | 400 |       496.1µs |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:37:53 | 400 |            0s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:37:59 | 400 |            0s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:44:08 | 200 |   13.0099061s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:44:56 | 200 |    3.6262525s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:52:20 | 200 |      4.4665ms |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:53:41 | 400 |    4.5520191s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:57:45 | 400 |      3.9683ms |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 20:58:42 | 400 |    8.0881179s |       127.0.0.1 | POST     /user/register
-[GIN] 2019/04/26 - 21:12:03 | 200 |    5.6231779s |       127.0.0.1 | POST     /user/login
-[GIN] 2019/04/26 - 21:14:04 | 200 |     1.008408s |       127.0.0.1 | POST     /user/login
-[GIN] 2019/04/26 - 21:16:02 | 200 |   28.3561177s |       127.0.0.1 | POST     /user/login
-2019-04-26 21:19:31.421 OK <nil>
-[GIN] 2019/04/26 - 21:19:31 | 200 |   10.1320454s |       127.0.0.1 | POST     /user/login
-2019-04-26 21:19:51.858 OK <nil>
-[GIN] 2019/04/26 - 21:19:51 | 200 |    3.4936509s |       127.0.0.1 | POST     /user/login
-2019-04-27 16:51:53.211 serverAddress [192.168.5.7:9001] of user_rpc Rpc server has started and full key [vector/user_rpc/57b3d82a912539e793c45ee9a60a7d3d]
-2019-04-27 16:52:46.149 serverAddress [192.168.5.7:9001] of user_rpc Rpc server has existed with got signal [interrupt] and full key [vector/user_rpc/57b3d82a912539e793c45ee9a60a7d3d]
-2019-04-27 17:19:15.390 serverAddress [:9090] of user-rpc Rpc server has started and full key [vector/user-rpc/f7b0a71e56d608a9a8baac131f9bb397]
-2019-04-27 17:19:32.553 serverAddress [:9090] of user-rpc Rpc server has existed with got signal [interrupt] and full key [vector/user-rpc/f7b0a71e56d608a9a8baac131f9bb397]
-2019-04-27 17:19:54.720 serverAddress [:9090] of user-rpc Rpc server has started and full key [vector/user-rpc/f7b0a71e56d608a9a8baac131f9bb397]
-2019-04-27 17:20:13.486 serverAddress [:9090] of user-rpc Rpc server has existed with got signal [interrupt] and full key [vector/user-rpc/f7b0a71e56d608a9a8baac131f9bb397]
-2019-04-27 17:21:49.389 serverAddress [192.168.5.7:9090] of user-rpc Rpc server has started and full key [vector/user-rpc/65e39402979e44e720d2f19fe44aa566]
-2019-04-27 17:22:04.725 serverAddress [192.168.5.7:9090] of user-rpc Rpc server has existed with got signal [interrupt] and full key [vector/user-rpc/65e39402979e44e720d2f19fe44aa566]
+2019-04-28 21:23:24.943 serverAddress [192.168.5.7:9090] of integral-rpc Rpc server has started and full key [vector/integral-rpc/65e39402979e44e720d2f19fe44aa566]
+2019-04-28 21:23:24.945 Consume message INSERT INTO `integral` (user_id,integral) VALUES(22,13) [SUCESSS]
+2019-04-28 21:23:31.667 serverAddress [192.168.5.7:9090] of integral-rpc Rpc server has existed with got signal [interrupt] and full key [vector/integral-rpc/65e39402979e44e720d2f19fe44aa566]
+2019-04-28 21:30:08.210 Integral rpc server has start ad :9002 ....
+2019-04-28 21:30:08.210 serverAddress [192.168.5.7:9090] of integral-rpc Rpc server has started and full key [vector/integral-rpc/65e39402979e44e720d2f19fe44aa566]
+2019-04-28 21:30:08.212 Consume message INSERT INTO `integral` (user_id,integral) VALUES(22,90) [SUCESSS]
+2019-04-28 21:30:08.214 Consume message INSERT INTO `integral` (user_id,integral) VALUES(22,90) [SUCESSS]
+2019-04-28 21:30:31.167 serverAddress [192.168.5.7:9090] of integral-rpc Rpc server has existed with got signal [interrupt] and full key [vector/integral-rpc/65e39402979e44e720d2f19fe44aa566]
+2019-04-28 21:30:38.092 Integral rpc server has start ad :9002 ....
+2019-04-28 21:30:38.092 serverAddress [192.168.5.7:9090] of integral-rpc Rpc server has started and full key [vector/integral-rpc/65e39402979e44e720d2f19fe44aa566]
+2019-04-28 21:30:38.095 Consume message INSERT INTO `integral` (user_id,integral) VALUES(22,90) [SUCESSS]
+2019-04-28 21:30:54.596 serverAddress [192.168.5.7:9090] of integral-rpc Rpc server has existed with got signal [interrupt] and full key [vector/integral-rpc/65e39402979e44e720d2f19fe44aa566]
+2019-04-28 21:31:00.367 Integral rpc server has start ad :9002 ....
+2019-04-28 21:31:00.368 serverAddress [192.168.5.7:9090] of integral-rpc Rpc server has started and full key [vector/integral-rpc/65e39402979e44e720d2f19fe44aa566]
+2019-04-28 21:31:00.371 Consume message INSERT INTO `integral` (user_id,integral) VALUES(22,90) [SUCESSS]
+2019-04-28 21:31:12.878 serverAddress [192.168.5.7:9090] of integral-rpc Rpc server has existed with got signal [interrupt] and full key [vector/integral-rpc/65e39402979e44e720d2f19fe44aa566]
