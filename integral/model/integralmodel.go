@@ -42,7 +42,7 @@ func (m *IntegralModel) ExistByUserId(userId int) (bool, error) {
 
 func (m *IntegralModel) FindByUserId(userId int) (*Integral, error) {
 	res := new(Integral)
-	if _, err := m.mysql.Where("userId = ?", userId).Get(res); err != nil {
+	if _, err := m.mysql.Where("user_id = ?", userId).Get(res); err != nil {
 		return nil, err
 	}
 	return res, nil

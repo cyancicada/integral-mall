@@ -1,0 +1,19 @@
+syntax = "proto3";
+package protos;
+
+message FindUserByMobileRequest {
+    string mobile = 1;
+}
+
+message UserResponse {
+    int64 id =1;
+    string name =2;
+}
+
+message FindIdRequest{
+    int64 id =1;
+}
+service UserRpc {
+    rpc FindUserByMobile (FindUserByMobileRequest) returns (UserResponse);
+    rpc FindId (FindIdRequest) returns (UserResponse);
+}

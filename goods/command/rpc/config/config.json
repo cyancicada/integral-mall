@@ -1,0 +1,22 @@
+{
+  "Mode": "release",
+  "Mysql": {
+    "DataSource": "root:Vector.123@tcp(192.168.5.100:3306)/user?charset=utf8",
+    "Table": {
+      "User": "user"
+    }
+  },
+  "Redis": {
+    "DataSource": "192.168.5.100:6379",
+    "Auth": ""
+  },
+  "RpcServerConfig": {
+    "Schema": "vector",
+    "ServerName": "user-rpc",
+    "ServerAddress": ":9090",
+    "Endpoints": [
+      "192.168.5.100:2379",
+      "192.168.5.101:2379"
+    ]
+  }
+}
