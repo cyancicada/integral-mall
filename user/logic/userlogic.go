@@ -34,7 +34,10 @@ type (
 	}
 )
 
-var ErrRecordExist = baseerror.NewBaseError("此手机号已经存在")
+var (
+	ErrRecordExist        = baseerror.NewBaseError("此手机号已经存在")
+	ErrUserNameOrPassword = baseerror.NewBaseError("用户名或密码错误")
+)
 
 func NewUserLogic(userModel *model.UserModel,
 	redisCache *redis.Client,
@@ -73,6 +76,9 @@ func (l *UserLogic) Login(r *LoginRequest) (*LoginResponse, error) {
 	user, err := l.userModel.FindByMobile(r.Mobile)
 	if err != nil {
 		return nil, err
+	}
+	if user.Password != fmt.Sprintf("%x", md5.Sum([]byte(r.Password))) {
+		return nil, ErrUserNameOrPassword
 	}
 	response.Authorization = fmt.Sprintf("%x", md5.Sum([]byte(user.Mobile+strconv.Itoa(int(user.Id)))))
 	l.redisCache.Set(response.Authorization, user.Id, model.AuthorizationExpire)
