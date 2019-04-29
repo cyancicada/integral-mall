@@ -53,6 +53,6 @@ func main() {
 	}
 	userServerLogic.ConsumeMessage()
 	defer userServerLogic.CloseRabbitMqConn()
-	log4g.InfoFormat("Integral rpc server has start ad %s ....", conf.Port)
+	log4g.InfoFormat("Integral rpc server has start ad %s ....", conf.RpcServerConfig.ServerAddress)
 	log4g.Error(rpcServer.Run())
 }
