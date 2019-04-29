@@ -127,3 +127,14 @@ func (l *IntegralLogic) ConsumerIntegral(_ context.Context, r *protos.ConsumerIn
 	l.PushMessage(l.integralModel.UpdateIntegralByUserIdSql(int(r.UserId), int(r.ConsumerIntegral)))
 	return new(protos.IntegralResponse), nil
 }
+
+func (l *IntegralLogic) FindOneByUserId(_ context.Context, r *protos.FindOneByUserIdRequest) (*protos.IntegralResponse, error) {
+	//l.PushMessage(l.integralModel.UpdateIntegralByUserIdSql(int(r.UserId), int(r.ConsumerIntegral)))
+	one, err := l.integralModel.FindByUserId(int(r.UserId))
+	if err != nil {
+		return nil, err
+	}
+	return &protos.IntegralResponse{
+		UserId: r.UserId, Integral: int64(one.Integral),
+	}, nil
+}

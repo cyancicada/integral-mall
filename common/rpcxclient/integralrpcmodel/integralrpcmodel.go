@@ -18,6 +18,10 @@ type (
 	IntegralRpcModel struct {
 		cli *grpcx.GrpcxClient
 	}
+	IntegralClientModel struct {
+		UserId   int
+		Integral int
+	}
 )
 
 func NewIntegralRpcModel(cli *grpcx.GrpcxClient) *IntegralRpcModel {
@@ -57,4 +61,23 @@ func (m *IntegralRpcModel) ConsumerIntegral(userId, integral int) error {
 		return err
 	}
 	return nil
+}
+
+func (m *IntegralRpcModel) FindOneByUserId(userId int) (*IntegralClientModel, error) {
+	conn, err := m.cli.GetConnection()
+	if err != nil {
+		return nil, err
+	}
+	clientIntegral := protos.NewIntegralRpcClient(conn)
+	ctx, cancelFunc := context.WithTimeout(context.Background(), config.GrpcxDialTimeout)
+	defer cancelFunc()
+	res, err := clientIntegral.FindOneByUserId(
+		ctx,
+		&protos.FindOneByUserIdRequest{UserId: int64(userId)})
+	if err != nil {
+		return nil, err
+	}
+	return &IntegralClientModel{
+		UserId: userId, Integral: int(res.Integral),
+	}, nil
 }

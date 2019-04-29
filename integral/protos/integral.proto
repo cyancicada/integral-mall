@@ -19,7 +19,11 @@ message ConsumerIntegralRequest {
     int64 userId = 1;
     int64 consumerIntegral = 2;
 }
+message FindOneByUserIdRequest {
+    int64 userId = 1;
+}
 service IntegralRpc {
     rpc AddIntegral (AddIntegralRequest) returns (IntegralResponse);
     rpc ConsumerIntegral (ConsumerIntegralRequest) returns (IntegralResponse);
+    rpc FindOneByUserId (FindOneByUserIdRequest) returns (IntegralResponse);
 }
