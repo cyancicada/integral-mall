@@ -12,12 +12,11 @@ import (
 
 type (
 	IntegralLogic struct {
-		dialHost       string
-		queueName      string
-		integralModel  *model.IntegralModel
-		rabbitMqConn   *amqp.Connection
-		consumeChannel *amqp.Channel
-		pushChannel    *amqp.Channel
+		dialHost      string
+		queueName     string
+		integralModel *model.IntegralModel
+		rabbitMqConn  *amqp.Connection
+		channel       *amqp.Channel
 	}
 )
 
@@ -37,8 +36,7 @@ func (l *IntegralLogic) createDial() error {
 		return err
 	}
 	l.rabbitMqConn = conn
-	l.consumeChannel, err = l.rabbitMqConn.Channel()
-	l.pushChannel, err = l.rabbitMqConn.Channel()
+	l.channel, err = l.rabbitMqConn.Channel()
 	if err != nil {
 		return nil
 	}
@@ -49,33 +47,25 @@ func (l *IntegralLogic) CloseRabbitMqConn() {
 	if err := l.rabbitMqConn.Close(); err != nil {
 		log4g.ErrorFormat("CloseRabbitMqConn err %+v", err)
 	}
-	if l.consumeChannel != nil {
-		if err := l.consumeChannel.Close(); err != nil {
+	if l.channel != nil {
+		if err := l.channel.Close(); err != nil {
 			log4g.ErrorFormat("ConsumeChannel err %+v", err)
 		}
 	}
 }
 
 func (l *IntegralLogic) PushMessage(message string) {
-	defer func() {
-		if err := l.pushChannel.Close(); err != nil {
-			log4g.ErrorFormat("ch.Close err %+v", err)
-		}
-	}()
-	q, err := l.QueueDeclare(l.pushChannel)
+	q, err := l.QueueDeclare(l.channel)
 	if err != nil {
 		log4g.ErrorFormat("PushMessage err %+v", err)
 		return
 	}
-	err = l.pushChannel.Publish(
+	err = l.channel.Publish(
 		"",     // exchange
 		q.Name, // routing key
 		false,  // mandatory
 		false,  // immediate
-		amqp.Publishing{
-			ContentType: "text/plain",
-			Body:        []byte(message),
-		})
+		amqp.Publishing{Body: []byte(message)})
 	if err != nil {
 		log4g.ErrorFormat("ch.Publish err %+v", err)
 		return
@@ -83,12 +73,12 @@ func (l *IntegralLogic) PushMessage(message string) {
 }
 
 func (l *IntegralLogic) ConsumeMessage() {
-	q, err := l.QueueDeclare(l.consumeChannel)
+	q, err := l.QueueDeclare(l.channel)
 	if err != nil {
 		log4g.ErrorFormat("PushMessage err %+v", err)
 		return
 	}
-	messageList, err := l.consumeChannel.Consume(
+	messageList, err := l.channel.Consume(
 		q.Name, // queue
 		"",     // consumer
 		true,   // auto-ack

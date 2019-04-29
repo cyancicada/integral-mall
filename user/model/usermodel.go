@@ -40,6 +40,21 @@ func (m *UserModel) Insert(u *User) (int64, error) {
 	return m.mysql.Insert(u)
 }
 
+func (m *UserModel) TransactionInsert(u *User, opts ...func(userId int64) error) (*User, error) {
+	_, err := m.mysql.Transaction(func(session *xorm.Session) (i interface{}, e error) {
+		if _, err := m.mysql.Insert(u); err != nil {
+			return nil, err
+		}
+		for _, opt := range opts {
+			if err := opt(u.Id); err != nil {
+				return nil, err
+			}
+		}
+		return u, nil
+	})
+	return u, err
+}
+
 func (m *UserModel) ExistByMobile(mobile string) (bool, error) {
 	return m.mysql.Exist(&User{Mobile: mobile})
 }

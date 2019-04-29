@@ -16,7 +16,7 @@
     "VirtualHost": ""
   },
   "IntegralRpc": {
-    "Target": "vector://integral-rpc",
+    "Target": "vector:///integral-rpc",
     "Endpoints": [
       "192.168.5.100:2379",
       "192.168.5.101:2379"
