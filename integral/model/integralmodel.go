@@ -71,7 +71,7 @@ func (m *IntegralModel) InsertIntegralSql(userId, integral int) string {
 func (m *IntegralModel) UpdateIntegralByUserIdSql(userId, integral int) string {
 	query := "update " + m.table + " set integral=integral-%d where user_id=%d"
 	log4g.Info(query)
-	return fmt.Sprintf(query, userId, integral)
+	return fmt.Sprintf(query, integral, userId)
 }
 
 func (m *IntegralModel) ExecSql(sql string) error {
