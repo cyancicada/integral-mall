@@ -1,6 +1,5 @@
 {
   "Mode": "release",
-  "Port": ":9001",
   "Mysql": {
     "DataSource": "root:Vector.123@tcp(192.168.5.100:3306)/user?charset=utf8",
     "Table": {
