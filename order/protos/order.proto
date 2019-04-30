@@ -1,7 +1,7 @@
 syntax = "proto3";
 package protos;
 //protoc --go_out=plugins=grpc:. xx.proto
-message FindIdRequest {
+message FindOrderIdRequest {
     string orderId = 1;
 }
 //Id         int64
@@ -19,6 +19,7 @@ message OrderOneResponse {
     int64 userId = 5;
     string createTime = 7;
 }
+
 message BookingGoodsResponse {
     string orderId = 1;
 }
@@ -34,5 +35,5 @@ message BookingGoodsRequest {
 
 service OrderRpc {
     rpc BookingGoods (BookingGoodsRequest) returns (BookingGoodsResponse);
-    rpc FindId (FindIdRequest) returns (OrderOneResponse);
+    rpc FindOrderId (FindOrderIdRequest) returns (OrderOneResponse);
 }

@@ -68,9 +68,9 @@ func (m *OrderModel) FindId(orderId string) (*OrderOneResponse, error) {
 	client := protos.NewOrderRpcClient(conn)
 	ctx, cancelFunc := context.WithTimeout(context.Background(), config.GrpcxDialTimeout)
 	defer cancelFunc()
-	order, err := client.FindId(
+	order, err := client.FindOrderId(
 		ctx,
-		&protos.FindIdRequest{OrderId: orderId})
+		&protos.FindOrderIdRequest{OrderId: orderId})
 	if err != nil {
 		return nil, err
 	}

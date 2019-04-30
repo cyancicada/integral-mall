@@ -20,7 +20,7 @@ func NewOrderRpcServerLogic(orderModel *model.OrderModel,
 
 	rabbitMqServer *utils.RabbitMqServer,
 ) *OrderRpcServerLogic {
-	return &OrderRpcServerLogic{orderModel: orderModel}
+	return &OrderRpcServerLogic{orderModel: orderModel, rabbitMqServer: rabbitMqServer}
 }
 
 func (l *OrderRpcServerLogic) ConsumeMessageStart() {
@@ -45,7 +45,7 @@ func (l *OrderRpcServerLogic) BookingGoods(_ context.Context, r *protos.BookingG
 	}, nil
 }
 
-func (l *OrderRpcServerLogic) FindId(_ context.Context, r *protos.FindIdRequest) (*protos.OrderOneResponse, error) {
+func (l *OrderRpcServerLogic) FindOrderId(_ context.Context, r *protos.FindOrderIdRequest) (*protos.OrderOneResponse, error) {
 	order, err := l.orderModel.FindById(r.OrderId)
 	if err != nil {
 		return nil, err
