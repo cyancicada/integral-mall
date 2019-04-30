@@ -23,4 +23,5 @@ type Config struct {
 		VirtualHost string
 	}
 	IntegralRpc *rpc_config.ClientConf
+	OrderRpc    *rpc_config.ClientConf
 }

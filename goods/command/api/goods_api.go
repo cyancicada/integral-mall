@@ -48,11 +48,15 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	orderRpcxClient, err := grpcx.MustNewGrpcxClient(conf.OrderRpc)
+	if err != nil {
+		log.Fatal(err)
+	}
 	integralRpcModel := integralrpcmodel.NewIntegralRpcModel(
 		rpcxClient,
 	)
 	orderRpcModel := orderrpcmodel.NewOrderModel(
-		rpcxClient,
+		orderRpcxClient,
 	)
 
 	goodsModel := model.NewGoodsModel(engine, client, conf.Mysql.Table.Goods)

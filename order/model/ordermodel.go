@@ -77,7 +77,7 @@ func (m *OrderModel) ExecSql(sql string) error {
 
 func (m *OrderModel) BookingGoodsSql(orderId string, goodsId int64, goodsName, mobile string, userId, num int64) string {
 	return fmt.Sprintf(
-		"INSERT INTO "+m.table+" (id,goods_id,good_name,mobile,num,user_id) VALUES ('%s',%d,'%s','%s',%d,%d)",
+		"INSERT INTO `"+m.table+"`(id,goods_id,good_name,mobile,num,user_id) VALUES ('%s',%d,'%s','%s',%d,%d)",
 		orderId, goodsId, goodsName, mobile, num, userId,
 	)
 }
