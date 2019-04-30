@@ -50,7 +50,7 @@ func main() {
 
 	orderServerLogic := logic.NewOrderRpcServerLogic(orderModel, orderQunue)
 	rpcServer, err := grpcx.MustNewGrpcxServer(conf.RpcServerConfig, func(server *grpc.Server) {
-		protos.RegisterUserRpcServer(server, orderServerLogic)
+		protos.RegisterOrderRpcServer(server, orderServerLogic)
 	})
 	if err != nil {
 		log.Fatal(err)
