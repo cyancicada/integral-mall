@@ -91,6 +91,8 @@ func (l *RabbitMqServer) ConsumeMessage(consumeMessageFunc func(message string) 
 			log4g.InfoFormat("get message %s", msg)
 			if err := consumeMessageFunc(msg); err != nil {
 				l.PushMessage(msg)
+
+				//正式环境不用此方法
 			} else {
 				log4g.InfoFormat("Consume message %s [SUCESSS]", msg)
 			}

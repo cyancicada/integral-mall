@@ -102,5 +102,5 @@ func (l *GoodsLogic) GoodsOrder(r *GoodsOrderRequest) (*GoodsOrderResponse, erro
 	}); err != nil {
 		return nil, err
 	}
-	return new(GoodsOrderResponse), nil
+	return &GoodsOrderResponse{OrderId: orderId}, nil
 }
