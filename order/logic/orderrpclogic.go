@@ -3,6 +3,8 @@ package logic
 import (
 	"context"
 
+	"github.com/yakaa/log4g"
+
 	"integral-mall/common/i18n"
 	"integral-mall/common/utils"
 	"integral-mall/order/model"
@@ -25,6 +27,7 @@ func NewOrderRpcServerLogic(orderModel *model.OrderModel,
 
 func (l *OrderRpcServerLogic) ConsumeMessageStart() {
 	l.rabbitMqServer.ConsumeMessage(func(message string) error {
+		log4g.InfoFormat("ConsumeMessageStart message %s", message)
 		return l.orderModel.ExecSql(message)
 	})
 }

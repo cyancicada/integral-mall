@@ -88,7 +88,7 @@ func (l *RabbitMqServer) ConsumeMessage(consumeMessageFunc func(message string) 
 	go func() {
 		for d := range messageList {
 			msg := string(d.Body)
-			log4g.InfoFormat("get message %ss", msg)
+			log4g.InfoFormat("get message %s", msg)
 			if err := consumeMessageFunc(msg); err != nil {
 				l.PushMessage(msg)
 			} else {
