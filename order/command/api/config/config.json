@@ -1,0 +1,21 @@
+{
+  "Mode": "release",
+  "Port": ":9994",
+  "Mysql": {
+    "DataSource": "root:Vector.123@tcp(192.168.5.100:3306)/order?charset=utf8",
+    "Table": {
+      "Order": "order"
+    }
+  },
+  "Redis": {
+    "DataSource": "192.168.5.100:6379",
+    "Auth": ""
+  },
+  "UserRpc": {
+    "Target": "vector:///user-rpc",
+    "Endpoints": [
+      "192.168.5.100:2379",
+      "192.168.5.101:2379"
+    ]
+  }
+}

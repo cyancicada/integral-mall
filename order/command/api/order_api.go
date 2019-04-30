@@ -15,12 +15,11 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"integral-mall/common/middleware"
-	"integral-mall/common/rpcxclient/integralrpcmodel"
-	"integral-mall/common/rpcxclient/orderrpcmodel"
-	"integral-mall/goods/command/api/config"
-	"integral-mall/goods/controller"
-	"integral-mall/goods/logic"
-	"integral-mall/goods/model"
+	"integral-mall/common/rpcxclient/userrpcmodel"
+	"integral-mall/order/command/api/config"
+	"integral-mall/order/controller"
+	"integral-mall/order/logic"
+	"integral-mall/order/model"
 )
 
 var configFile = flag.String("f", "config/config.json", "use config")
@@ -44,28 +43,24 @@ func main() {
 		log.Fatal(err)
 	}
 	client := redis.NewClient(&redis.Options{Addr: conf.Redis.DataSource, Password: conf.Redis.Auth})
-	rpcxClient, err := grpcx.MustNewGrpcxClient(conf.IntegralRpc)
+
+	rpcxClient, err := grpcx.MustNewGrpcxClient(conf.UserRpc)
 	if err != nil {
 		log.Fatal(err)
 	}
-	integralRpcModel := integralrpcmodel.NewIntegralRpcModel(
+	userRpcModel := userrpcmodel.NewUserRpcModel(
 		rpcxClient,
 	)
-	orderRpcModel := orderrpcmodel.NewOrderModel(
-		rpcxClient,
-	)
+	orderModel := model.NewOrderModel(engine, client, conf.Mysql.Table.Order)
+	orderLogic := logic.NewOrderLogic(orderModel, client, userRpcModel)
+	orderController := controller.NewOrderController(orderLogic)
 
-	goodsModel := model.NewGoodsModel(engine, client, conf.Mysql.Table.Goods)
-	goodsLogic := logic.NewGoodsLogic(goodsModel, integralRpcModel, orderRpcModel)
-	userController := controller.NewGoodsController(goodsLogic)
-	loginAuth := middleware.NewAuthorization(client)
+	auth := middleware.NewAuthorization(client)
 	r := gin.Default()
-	goodsRouteGroup := r.Group("/goods")
+	userRouteGroup := r.Group("/order")
+	userRouteGroup.Use(auth.Auth)
 	{
-		goodsRouteGroup.POST("/search", userController.GoodSearch)
-		goodsRouteGroup.POST("/list", userController.GoodSearch)
-		goodsRouteGroup.POST("/order", userController.GoodsOrder, loginAuth.Auth)
-
+		userRouteGroup.POST("/list", orderController.OrderList)
 	}
 	log4g.Error(r.Run(conf.Port)) // listen and serve on 0.0.0.0:8080
 }

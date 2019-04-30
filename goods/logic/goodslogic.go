@@ -3,13 +3,17 @@ package logic
 import (
 	"integral-mall/common/baseerror"
 	"integral-mall/common/rpcxclient/integralrpcmodel"
+	"integral-mall/common/rpcxclient/orderrpcmodel"
 	"integral-mall/goods/model"
+
+	"github.com/satori/go.uuid"
 )
 
 type (
 	GoodsLogic struct {
 		goodsModel       *model.GoodsModel
 		integralRpcModel *integralrpcmodel.IntegralRpcModel
+		orderRpcModel    *orderrpcmodel.OrderModel
 	}
 	GoodSearchRequest struct {
 		Name string `json:"name"`
@@ -17,10 +21,13 @@ type (
 	}
 
 	GoodsOrderRequest struct {
-		Id  int64 `json:"id"  binding:"required"`
-		Num int64 `json:"num" binding:"required"`
+		Id     int64  `json:"id"  binding:"required"`
+		UserId int    `json:"-"`
+		Num    int64  `json:"num" binding:"required"`
+		Mobile string `json:"mobile" binding:"required"`
 	}
 	GoodsOrderResponse struct {
+		OrderId string `json:"orderId"`
 	}
 
 	GoodSearchResponse struct {
@@ -45,8 +52,9 @@ var (
 
 func NewGoodsLogic(goodsModel *model.GoodsModel,
 	integralRpcModel *integralrpcmodel.IntegralRpcModel,
+	orderRpcModel *orderrpcmodel.OrderModel,
 ) *GoodsLogic {
-	return &GoodsLogic{goodsModel: goodsModel, integralRpcModel: integralRpcModel}
+	return &GoodsLogic{goodsModel: goodsModel, integralRpcModel: integralRpcModel, orderRpcModel: orderRpcModel}
 }
 
 func (l *GoodsLogic) GoodSearch(r *GoodSearchRequest) (*GoodSearchResponse, error) {
@@ -63,7 +71,7 @@ func (l *GoodsLogic) GoodSearch(r *GoodSearchRequest) (*GoodSearchResponse, erro
 	return response, nil
 }
 
-func (l *GoodsLogic) GoodsOrder(r *GoodsOrderRequest, userId int) (*GoodsOrderResponse, error) {
+func (l *GoodsLogic) GoodsOrder(r *GoodsOrderRequest) (*GoodsOrderResponse, error) {
 	goods, err := l.goodsModel.FindById(r.Id)
 	if err != nil {
 		return nil, err
@@ -71,16 +79,23 @@ func (l *GoodsLogic) GoodsOrder(r *GoodsOrderRequest, userId int) (*GoodsOrderRe
 	if goods.Store <= 0 {
 		return nil, ErrStoreOver
 	}
-	integral, err := l.integralRpcModel.FindOneByUserId(userId)
+	integral, err := l.integralRpcModel.FindOneByUserId(r.UserId)
 	if err != nil {
 		return nil, err
 	}
 	if integral.Integral < goods.Price {
 		return nil, ErrIntegralOver
 	}
-	if err := l.goodsModel.TransactionChangeStore(r.Id, r.Num, userId, func(userId int) error {
+	orderId := uuid.NewV4().String()
+	if err := l.goodsModel.TransactionChangeStore(r.Id, r.Num, r.UserId, func(userId int) error {
 		//integral
 		if err := l.integralRpcModel.ConsumerIntegral(userId, goods.Price); err != nil {
+			return err
+		}
+		// order
+		if _, err := l.orderRpcModel.BookingGoods(
+			orderId, goods.GoodName, r.Mobile, r.Id, int64(r.UserId), r.Num,
+		); err != nil {
 			return err
 		}
 		return nil

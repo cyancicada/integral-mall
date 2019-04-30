@@ -1,0 +1,27 @@
+{
+  "Mode": "release",
+  "Mysql": {
+    "DataSource": "root:Vector.123@tcp(192.168.5.100:3306)/order?charset=utf8",
+    "Table": {
+      "Order": "order"
+    }
+  },
+  "Redis": {
+    "DataSource": "192.168.5.100:6379",
+    "Auth": ""
+  },
+  "RpcServerConfig": {
+    "Schema": "vector",
+    "ServerName": "order-rpc",
+    "ServerAddress": ":9094",
+    "Endpoints": [
+      "192.168.5.100:2379",
+      "192.168.5.101:2379"
+    ]
+  },
+  "RabbitMq": {
+    "DataSource": "amqp://root:123456@192.168.5.100:5672/",
+    "VirtualHost": "",
+    "QueueName": "order"
+  }
+}

@@ -34,7 +34,8 @@ func (c *GoodsController) GoodsOrder(ctx *gin.Context) {
 		baseresponse.ParamError(ctx, err)
 		return
 	}
-	res, err := c.goodsLogic.GoodsOrder(r, ctx.GetInt("userId"))
+	r.UserId = ctx.GetInt("userId")
+	res, err := c.goodsLogic.GoodsOrder(r)
 	baseresponse.HttpResponse(ctx, res, err)
 	return
 }

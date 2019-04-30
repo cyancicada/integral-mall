@@ -1,0 +1,38 @@
+syntax = "proto3";
+package protos;
+//protoc --go_out=plugins=grpc:. xx.proto
+message FindIdRequest {
+    string orderId = 1;
+}
+//Id         int64
+//		GoodName   string    `xorm:"varchar(20) notnull 'good_name'"`
+//		Mobile     string    `xorm:"varchar(25) notnull  unique 'mobile'"`
+//		Num        string    `xorm:"int   'num'"`
+//		UserId     int64     `xorm:"int   'user_id'"`
+//		CreateTime time.Time `xorm:"DateTime 'create_time'"`
+
+message OrderOneResponse {
+    string id = 1;
+    string goodName = 2;
+    string mobile = 3;
+    int64 num = 4;
+    int64 userId = 5;
+    string createTime = 7;
+}
+message BookingGoodsResponse {
+    string orderId = 1;
+}
+
+message BookingGoodsRequest {
+    string orderId = 1;
+    int64 goodsId = 2;
+    string GoodsName = 3;
+    int64 num = 4;
+    int64 userId = 5;
+    string mobile = 6;
+}
+
+service OrderRpc {
+    rpc BookingGoods (BookingGoodsRequest) returns (BookingGoodsResponse);
+    rpc FindId (FindIdRequest) returns (OrderOneResponse);
+}
