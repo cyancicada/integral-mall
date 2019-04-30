@@ -9,4 +9,5 @@ const (
 var ZhMessage = map[string]string{
 	"RegisterRequest.Mobile.required":   "手机号不能为空",
 	"RegisterRequest.Password.required": "密码不能为空",
+	"GoodsOrderRequest.Mobile.required": "手机号不能为空",
 }

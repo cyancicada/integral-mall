@@ -64,7 +64,7 @@ func main() {
 	{
 		goodsRouteGroup.POST("/search", userController.GoodSearch)
 		goodsRouteGroup.POST("/list", userController.GoodSearch)
-		goodsRouteGroup.POST("/order", userController.GoodsOrder, loginAuth.Auth)
+		goodsRouteGroup.Use(loginAuth.Auth).POST("/order", userController.GoodsOrder)
 
 	}
 	log4g.Error(r.Run(conf.Port)) // listen and serve on 0.0.0.0:8080
