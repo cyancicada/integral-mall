@@ -40,12 +40,12 @@ func (l *OrderRpcServerLogic) CloseRabbitMqServer() {
 //	FindId(ctx context.Context, in *FindIdRequest, opts ...grpc.CallOption) (*OrderOneResponse, error)
 func (l *OrderRpcServerLogic) BookingGoods(_ context.Context, r *protos.BookingGoodsRequest) (*protos.BookingGoodsResponse, error) {
 
-	l.rabbitMqServer.PushMessage(
+	err := l.rabbitMqServer.PushMessage(
 		l.orderModel.BookingGoodsSql(r.OrderId, r.GoodsId, r.GoodsName, r.Mobile, r.UserId, r.Num),
 	)
 	return &protos.BookingGoodsResponse{
 		OrderId: r.OrderId,
-	}, nil
+	}, err
 }
 
 func (l *OrderRpcServerLogic) FindOrderId(_ context.Context, r *protos.FindOrderIdRequest) (*protos.OrderOneResponse, error) {

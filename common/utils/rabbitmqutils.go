@@ -48,11 +48,10 @@ func (l *RabbitMqServer) CloseRabbitMqConn() {
 	}
 }
 
-func (l *RabbitMqServer) PushMessage(message string) {
+func (l *RabbitMqServer) PushMessage(message string) error {
 	q, err := l.QueueDeclare(l.channel)
 	if err != nil {
-		log4g.ErrorFormat("PushMessage err %+v", err)
-		return
+		return err
 	}
 	err = l.channel.Publish(
 		"",     // exchange
@@ -61,9 +60,9 @@ func (l *RabbitMqServer) PushMessage(message string) {
 		false,  // immediate
 		amqp.Publishing{Body: []byte(message)})
 	if err != nil {
-		log4g.ErrorFormat("ch.Publish err %+v", err)
-		return
+		return err
 	}
+	return nil
 }
 
 func (l *RabbitMqServer) ConsumeMessage(consumeMessageFunc func(message string) error) {
@@ -90,7 +89,9 @@ func (l *RabbitMqServer) ConsumeMessage(consumeMessageFunc func(message string) 
 			msg := string(d.Body)
 			log4g.InfoFormat("get message %s", msg)
 			if err := consumeMessageFunc(msg); err != nil {
-				l.PushMessage(msg)
+				if err := l.PushMessage(msg); err != nil {
+					log4g.ErrorFormat("PushMessage err %+v", err)
+				}
 
 				//正式环境不用此方法
 			} else {

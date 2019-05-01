@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 
+	"integral-mall/common/utils"
 	"integral-mall/integral/command/rpc/config"
 	"integral-mall/integral/logic"
 	"integral-mall/integral/model"
@@ -38,13 +39,17 @@ func main() {
 	}
 	client := redis.NewClient(&redis.Options{Addr: conf.Redis.DataSource, Password: conf.Redis.Auth})
 	integralModel := model.NewIntegralModel(engine, client, conf.Mysql.Table.Integral)
-	userServerLogic, err := logic.NewIntegralLogic(
+	rabbitMqServer, err := utils.NewRabbitMqServer(
 		conf.RabbitMq.DataSource+conf.RabbitMq.VirtualHost,
 		conf.RabbitMq.QueueName,
-		integralModel)
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
+	userServerLogic := logic.NewIntegralLogic(
+		rabbitMqServer,
+		integralModel)
+
 	rpcServer, err := grpcx.MustNewGrpcxServer(conf.RpcServerConfig, func(server *grpc.Server) {
 		protos.RegisterIntegralRpcServer(server, userServerLogic)
 	})
@@ -52,7 +57,7 @@ func main() {
 		log.Fatal(err)
 	}
 	userServerLogic.ConsumeMessage()
-	defer userServerLogic.CloseRabbitMqConn()
+	defer userServerLogic.Close()
 	log4g.InfoFormat("Integral rpc server has start ad %s ....", conf.RpcServerConfig.ServerAddress)
 	log4g.Error(rpcServer.Run())
 }
