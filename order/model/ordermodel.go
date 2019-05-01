@@ -27,7 +27,7 @@ type (
 )
 
 const (
-	OrderDefaultPageSize int = 10
+	OrderDefaultPageSize int = 2
 )
 
 func NewOrderModel(
@@ -55,14 +55,17 @@ func (m *OrderModel) PageFindByUserId(userId int64, page int) ([]*Order, int64, 
 	orders := []*Order(nil)
 	var count int64
 	var err error
-	if count, err = m.mysql.Where("user_id = ?", userId).Count(&orders); err != nil {
+	if count, err = m.mysql.Where("user_id = ?", userId).Count(new(Order)); err != nil {
 		return nil, 0, err
 	}
 	if page > 0 {
 		page = page - 1
 	}
 	start := OrderDefaultPageSize * page
-	if err = m.mysql.Where("user_id = ?", userId).Limit(OrderDefaultPageSize, start).Find(&orders); err != nil {
+	if err = m.mysql.Where("user_id = ?", userId).
+		Desc("create_time").
+		Limit(OrderDefaultPageSize, start).
+		Find(&orders); err != nil {
 		return nil, 0, err
 	}
 	return orders, count, nil

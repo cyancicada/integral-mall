@@ -26,6 +26,7 @@ func (c *OrderController) OrderList(ctx *gin.Context) {
 		baseresponse.ParamError(ctx, err)
 		return
 	}
+	r.UserId = int64(ctx.GetInt("userId"))
 	res, err := c.orderLogic.OrderList(r)
 	baseresponse.HttpResponse(ctx, res, err)
 	return
