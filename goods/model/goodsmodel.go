@@ -60,12 +60,15 @@ func (m *GoodsModel) PageList(name string, page int) ([]*Goods, int64, error) {
 		page = page - 1
 	}
 	goodsList := []*Goods(nil)
-	count, err := m.mysql.Table(m.table).Where("name LIKE ?", "%"+name+"%").Count(goodsList)
+	count, err := m.mysql.Table(m.table).Where("name LIKE ?", "%"+name+"%").Count(new(Goods))
 	if err != nil {
 		return nil, 0, err
 	}
 	page = page * goodsDefaultPageSize
-	if err := m.mysql.Table(m.table).Where("name LIKE ? LIMIT ?,10", "%"+name+"%", page).Find(&goodsList); err != nil {
+	if err := m.mysql.Table(m.table).
+		Where("name LIKE ?", "%"+name+"%").
+		Limit(goodsDefaultPageSize, page).
+		Find(&goodsList); err != nil {
 		return nil, 0, err
 	}
 	return goodsList, count, nil
