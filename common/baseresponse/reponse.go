@@ -28,7 +28,7 @@ func ParamError(ctx *gin.Context, err interface{}) {
 func HttpResponse(ctx *gin.Context, res, err interface{}) {
 	baeError, ok := err.(*baseerror.BaseError)
 	if ok {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": baeError.Error()})
+		ctx.JSON(http.StatusOK, gin.H{"message": baeError.Error()})
 		return
 	}
 	if err != nil {
