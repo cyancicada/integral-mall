@@ -89,7 +89,7 @@ func (m *GoodsModel) FindById(id int64) (*Goods, error) {
 func (m *GoodsModel) TransactionChangeStore(id, num int64, userId int, opts ...func(userId int) error) error {
 	_, err := m.mysql.Transaction(func(session *xorm.Session) (i interface{}, e error) {
 		query := "UPDATE " + m.table + " SET store=store-? WHERE id=?"
-		if _, err := m.mysql.Exec(query, num, id); err != nil {
+		if _, err := session.Exec(query, num, id); err != nil {
 			return nil, err
 		}
 		for _, opt := range opts {
