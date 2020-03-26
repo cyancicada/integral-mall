@@ -3,7 +3,7 @@
 # sql 如下 
 
 
-```sql```
+```sql
 
   CREATE DATABASE `goods` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 CREATE DATABASE `integral` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
@@ -64,4 +64,4 @@ CREATE TABLE user.user
   DEFAULT CHARSET = utf8
 
 
-```sql```
+```
